@@ -1,4 +1,5 @@
-# Запускной сервер АккуДжарвис бота
+# Main Server loading file of the AccuJarvis Bot
+
 import logging
 
 from aiogram import Bot, Dispatcher, executor, types
@@ -35,7 +36,7 @@ async def send_welcome(message: types.Message):
 async def del_income(message: types.Message):
     row_id = int((message.text[-1]))
     expenses.delete_income(row_id)
-    answer_message = 'Удалено!'
+    answer_message = 'Доход удалён!'
     await message.answer(answer_message)
 
 
@@ -107,6 +108,7 @@ async def list_incomes(message: types.Message):
     await message.answer(answer_message)
 
 
+#Adding new income or expense to the database
 @dp.message_handler()
 async def new(message: types.Message):
     try:
@@ -130,33 +132,6 @@ async def new(message: types.Message):
         return
 
 
-# # Adding of the new income
-# @dp.message_handler()
-# async def add_income(message: types.Message):
-#     try:
-#         income = expenses.add_income(message.text)
-#     except exceptions.NotCorrectMessage as e:
-#         await message.answer(str(e))
-#         return
-#     answer_message = (
-#         f"Добавлен доход {income.amount} грн \n\n"
-#         f"{expenses.get_today_incomes()}")
-#     await message.answer(answer_message)
-#
-#
-# # Adding of the new expense
-# @dp.message_handler()
-# async def add_expense(message: types.Message):
-#     try:
-#         expense = expenses.add_expense(message.text)
-#     except exceptions.NotCorrectMessage as e:
-#         await message.answer(str(e))
-#         return
-#     answer_message = (
-#         f"Добавлен расход {expense.amount} грн на {expense.category_name}.\n\n"
-#         f"{expenses.get_today_incomes()}")
-#     await message.answer(answer_message)
-
-
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+
