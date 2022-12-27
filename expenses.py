@@ -144,8 +144,8 @@ def delete_expense(row_id: int) -> None:
 
 
 # Delete the income by its identifier
-def delete_income(row_idi: int) -> None:
-    db.delete("budget", row_idi)
+def delete_income(row_id: int) -> None:
+    db.delete("budget", row_id)
 
 
 # Parsing of incoming message abt the new expense OR INCOME

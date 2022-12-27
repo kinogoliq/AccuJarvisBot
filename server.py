@@ -30,22 +30,22 @@ async def send_welcome(message: types.Message):
         "Категории расходов: /categories", parse_mode='html')
 
 
-# Deleting record per record identifier
-@dp.message_handler(lambda message: message.text.startswith('/del'))
-async def del_expense(message: types.Message):
-    row_id = int(message.text[4:])
-    expenses.delete_expense(row_id)
-    answer_message = "Расход удалён!"
+# Deleting income record per record identifier
+@dp.message_handler(lambda message: message.text.startswith('/deli'))
+async def del_income(message: types.Message):
+    row_id = int((message.text[-1]))
+    expenses.delete_income(row_id)
+    answer_message = 'Удалено!'
     await message.answer(answer_message)
 
 
-# Deleting income record per record identifier
-# @dp.message_handler(lambda message: message.text.startswith('/del'))
-# async def del_income(message: types.Message):
-#     row_id = int((message.text[4:]))
-#     expenses.delete_income(row_id)
-#     answer_message = 'Удалено!'
-#     await message.answer(answer_message)
+# Deleting record per record identifier
+@dp.message_handler(lambda message: message.text.startswith('/del'))
+async def del_expense(message: types.Message):
+    row_id = int(message.text[-1])
+    expenses.delete_expense(row_id)
+    answer_message = "Расход удалён!"
+    await message.answer(answer_message)
 
 
 # Sending the list of the categories of the expenses
@@ -100,7 +100,7 @@ async def list_incomes(message: types.Message):
 
     last_incomes_rows = [
         f'{last_income.amount} грн — нажми '
-        f'/del{last_income.id} для удаления'
+        f'/deli{last_income.id} для удаления'
         for last_income in last_income]
     answer_message = 'Последние сохраненные доходы:\n\n* ' + '\n\n* ' \
         .join(last_incomes_rows)
